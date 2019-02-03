@@ -3,14 +3,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pessoa;
+use App\Models\Ocorrencia;
 use App\Http\Controllers\Controller;
 
 function convertData($str, $hora = true) {
+    if (!$str) return $str;
     return date('d/m/Y' . ($hora ? ' H:i' : ''), strtotime($str));
 }
 
 function duf($str) {
+    if (!$str) return $str;
     return str_pad($str, 4, '0', STR_PAD_LEFT);
+}
+
+function cpf($str) {
+    if (!$str) return $str;
+    return substr($str, 0, 3) . '.' . substr($str, 3, 3) . '.' . substr($str, 6, 3). '-' . substr($str, 10, 2);
+}
+
+function getAtividade($id) {
+    $atividade = [ 'Residência', 'Comércio', 'Desmanche', 'Hospital' ];
+    return $atividade[$id];
+}
+
+// tipo
+function getTipo($id) {
+    $tipos = [ 'Notificação/Intimação/Advertência', 'Auto de Infração e Intimação', 'Auto de Apreensão', 'Termo de Fiscalização', 'Termo de ocorrência ou de Ajuste de Conduta' ];
+    return $tipos[$id];
+}
+
+// assunto
+function getAssunto($id) {
+    $assuntos = [ 'Perturbação da ordem', 'Obstrução de Calçada' ];
+    return $assuntos[$id];
 }
 
 class PessoaController extends Controller
@@ -23,40 +48,28 @@ class PessoaController extends Controller
      */
     public function view($id)
     {
-        $prazo = convertData('2019-01-31', false);
+        $prazo = null;
 
-        $ocorrencias = [
-            [
-                'id'   => 1,
-                'duf'  => duf(1),
-                'data'   => convertData('2019-01-12 23:15'),
-                'assunto' => 'Perturbação da ordem',
-                'tipo'   => 'Auto de infração e intimação',
-                'local'  => 'Av Francisco Rodrigues Filho, 100',
-                'observacao' => '',
-                'vencimentoPrazo' => convertData('2019-01-31', false)
-            ],
-            [
-                'id'   => 2,
-                'duf'  => duf(2),
-                'data'  => convertData('2019-01-11 22:10'),
-                'assunto' => 'Perturbação da ordem',
-                'tipo'  => 'Auto de infração e intimação',
-                'local' => 'Rua Otto Unger, 500',
-                'observacao' => 'Ameaçou o fiscal',
-                'vencimentoPrazo' => null
-            ],
-            [
-                'id'   => 3,
-                'duf'  => duf(3),
-                'data'  => convertData('2019-01-09 21:40'),
-                'assunto' => 'Perturbação da ordem',
-                'tipo'  => 'Notificação',
-                'local' => 'Rua Ricardo Vilela',
-                'observacao' => '',
-                'vencimentoPrazo' => null
-            ]
-        ];
+        $ocorrenciasList = Ocorrencia::where('personName_Id', $id)->with('imovel')->orderBy('id', 'desc')->get();
+        $ocorrencias = [];
+
+        foreach($ocorrenciasList as $ocorrencia) {
+            if ($ocorrencia->vencimentoPrazo && !$prazo) {
+                $prazo = convertData($ocorrencia->vencimentoPrazo, false);
+            }
+
+            $ocorrencias[] = [
+                'id'   => $ocorrencia->id,
+                'duf'  => duf($ocorrencia->duf),
+                'data'   => convertData($ocorrencia->dataDuf),
+                'assunto' => getAssunto($ocorrencia->assunto),
+                'tipo'   => getTipo($ocorrencia->tipo),
+                'imovelId' => $ocorrencia->imovel->id,
+                'local'  => $ocorrencia->imovel->logradouro . ($ocorrencia->imovel->bairro ? ' - ' . $ocorrencia->imovel->bairro : ''),
+                'observacao' => $ocorrencia->observacao,
+                'vencimentoPrazo' => convertData($ocorrencia->vencimentoPrazo, false)
+            ];
+        }
 
         return view('pessoa.view', ['pessoa' => Pessoa::findOrFail($id), 'ocorrencias' => $ocorrencias, 'prazo' => $prazo]);
     }

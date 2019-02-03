@@ -116,7 +116,7 @@
                                 </tr>
                                 <tr>
                                     <th>Responsável</th>
-                                    <td><?= $ocorrencia['responsavel']; ?></td>
+                                    <td><a href="<?=route('pessoa', $ocorrencia['responsavelId'])?>"><?= $ocorrencia['responsavel']; ?> (abrir)</a></td>
                                 </tr>
                                 <tr>
                                     <th>Tipo</th>

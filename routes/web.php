@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
-Route::get('/busca', 'BuscaController@index')->name('busca');
+Route::get('/', 'BuscaController@index')->name('busca');
 Route::get('/pessoa/{id}', 'PessoaController@view')->name('pessoa');
 Route::get('/imovel/{id}', 'ImovelController@view')->name('imovel');

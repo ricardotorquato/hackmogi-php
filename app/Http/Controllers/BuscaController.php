@@ -19,7 +19,9 @@ class BuscaController extends Controller
             $buscaEfetuada = true;
 
             if(!$request->input('filtro') || $request->input('filtro') == 'responsavel') {
-                $pessoasItems = Pessoa::where('nome', 'like', '%' . $request->input('busca') . '%')->get();
+                $pessoasItems = Pessoa::where('nome', 'like', '%' . $request->input('busca') . '%')
+                                      ->orWhere('documento', 'like', '%' . $request->input('busca') . '%')
+                                      ->get();
                 foreach( $pessoasItems as $pessoa ) {
                     $lista[] = [
                         'id'    => $pessoa->id,

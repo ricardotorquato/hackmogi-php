@@ -1,3 +1,9 @@
+<?php
+function cpf($str) {
+    if (!$str) return $str;
+    return substr($str, 0, 3) . '.' . substr($str, 3, 3) . '.' . substr($str, 6, 3). '-' . substr($str, 9, 2);
+}
+?>
 <html>
     <head>
         <style>
@@ -71,6 +77,7 @@
             <div class="row">
                 <div class="col">
                     <h2><?= $pessoa['nome']; ?></h2>
+                    Documento: <?= cpf($pessoa['documento']); ?>
                 </div>
             </div>
             <?php if ($prazo): ?>
@@ -127,7 +134,7 @@
                                 </tr>
                                 <tr>
                                     <th>Local</th>
-                                    <td><?= $ocorrencia['local']; ?></td>
+                                    <td><a href="<?= route('imovel', $ocorrencia['imovelId']); ?>"><?= $ocorrencia['local']; ?> (abrir)</a></td>
                                 </tr>
                                 <tr>
                                     <th>Tipo</th>
