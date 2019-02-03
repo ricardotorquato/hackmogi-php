@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pessoa;
+use App\Models\Imovel;
 use App\Http\Controllers\Controller;
 
 function convertData($str, $hora = true) {
@@ -13,7 +13,7 @@ function duf($str) {
     return str_pad($str, 4, '0', STR_PAD_LEFT);
 }
 
-class PessoaController extends Controller
+class ImovelController extends Controller
 {
     /**
      * Show the profile for the given user.
@@ -32,7 +32,7 @@ class PessoaController extends Controller
                 'data'   => convertData('2019-01-12 23:15'),
                 'assunto' => 'Perturbação da ordem',
                 'tipo'   => 'Auto de infração e intimação',
-                'local'  => 'Av Francisco Rodrigues Filho, 100',
+                'responsavel'  => 'Joao da Silva',
                 'observacao' => '',
                 'vencimentoPrazo' => convertData('2019-01-31', false)
             ],
@@ -41,8 +41,8 @@ class PessoaController extends Controller
                 'duf'  => duf(2),
                 'data'  => convertData('2019-01-11 22:10'),
                 'assunto' => 'Perturbação da ordem',
-                'tipo'  => 'Auto de infração e intimação',
-                'local' => 'Rua Otto Unger, 500',
+                'tipo'  => 'Notificação',
+                'responsavel'  => 'Joao da Silva',
                 'observacao' => 'Ameaçou o fiscal',
                 'vencimentoPrazo' => null
             ],
@@ -52,12 +52,12 @@ class PessoaController extends Controller
                 'data'  => convertData('2019-01-09 21:40'),
                 'assunto' => 'Perturbação da ordem',
                 'tipo'  => 'Notificação',
-                'local' => 'Rua Ricardo Vilela',
+                'responsavel'  => 'Chicão da Silva',
                 'observacao' => '',
                 'vencimentoPrazo' => null
             ]
         ];
 
-        return view('pessoa.view', ['pessoa' => Pessoa::findOrFail($id), 'ocorrencias' => $ocorrencias, 'prazo' => $prazo]);
+        return view('imovel.view', ['imovel' => Imovel::findOrFail($id), 'ocorrencias' => $ocorrencias, 'prazo' => $prazo]);
     }
 }

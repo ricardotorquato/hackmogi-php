@@ -70,20 +70,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <h2><?= $pessoa['nome']; ?></h2>
+                    <h2><?= $imovel['logradouro']; ?></h2>
                 </div>
             </div>
-            <?php if ($prazo): ?>
-            <div class="row">
-                <div class="col">
-                    <h4>
-                        <span class="badge badge-warning form-control no-border">
-                            <span>Prazo: <?= $prazo; ?></span>
-                        </span>
-                    </h4>
-                </div>
-            </div>
-            <?php endif; ?>
             <hr>
             <?php if ($ocorrencias && count($ocorrencias) > 0): ?>
                 <div id="accordion">
@@ -126,8 +115,8 @@
                                     <td><?= $ocorrencia['assunto']; ?></td>
                                 </tr>
                                 <tr>
-                                    <th>Local</th>
-                                    <td><?= $ocorrencia['local']; ?></td>
+                                    <th>Responsável</th>
+                                    <td><?= $ocorrencia['responsavel']; ?></td>
                                 </tr>
                                 <tr>
                                     <th>Tipo</th>
