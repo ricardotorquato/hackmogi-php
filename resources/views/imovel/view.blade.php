@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                             <?php endif; ?>
-                            <table class="table">
+                            <table class="table-responsive">
                                 <?php if($ocorrencia['observacao']): ?>
                                 <tr>
                                     <th>Observação</th>

@@ -94,7 +94,7 @@ $filtro = Request::input('filtro');
                         </div>
                     </div>
                     <br /><br />
-                    <table class="table">
+                    <table class="table-responsive">
                         <tbody>
                             <?php foreach($lista as $item): ?>
                             <tr>
