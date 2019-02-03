@@ -63,7 +63,8 @@ class ImovelController extends Controller
                 'responsavelId' => $ocorrencia->pessoa->id,
                 'responsavel'  => $ocorrencia->pessoa->nome,
                 'observacao' => $ocorrencia->observacao,
-                'vencimentoPrazo' => convertData($ocorrencia->vencimentoPrazo, false)
+                'vencimentoPrazo' => convertData($ocorrencia->vencimentoPrazo, false),
+                'fiscal' => $ocorrencia->fiscal
             ];
         }
 

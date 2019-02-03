@@ -140,6 +140,10 @@ function cpf($str) {
                                     <th>Tipo</th>
                                     <td><?= $ocorrencia['tipo']; ?></td>
                                 </tr>
+                                <tr>
+                                    <th>Fiscal</th>
+                                    <td><?= $ocorrencia['fiscal']; ?></td>
+                                </tr>
                             </table>
                         </div>
                         </div>

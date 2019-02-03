@@ -67,7 +67,8 @@ class PessoaController extends Controller
                 'imovelId' => $ocorrencia->imovel->id,
                 'local'  => $ocorrencia->imovel->logradouro . ($ocorrencia->imovel->bairro ? ' - ' . $ocorrencia->imovel->bairro : ''),
                 'observacao' => $ocorrencia->observacao,
-                'vencimentoPrazo' => convertData($ocorrencia->vencimentoPrazo, false)
+                'vencimentoPrazo' => convertData($ocorrencia->vencimentoPrazo, false),
+                'fiscal' => $ocorrencia->fiscal
             ];
         }
 
